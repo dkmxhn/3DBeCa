@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tranh 3D Bể Cá - Lộc Phát</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f8f9fa;
+      color: #333;
+    }
+    .banner {
+      background: url('https://i.postimg.cc/BnvQwv30/nh-ch-y.jpg') center/cover no-repeat;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-shadow: 1px 1px 5px rgba(0,0,0,0.8);
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .center-text {
+      text-align: center;
+      margin: 20px auto;
+      font-size: 18px;
+      color: #0275d8;
+      font-weight: 500;
+      max-width: 800px;
+    }
+    header {
+      background-color: #0275d8;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    h1, h2 {
+      margin: 0 0 10px 0;
+    }
+    .section {
+      padding: 20px;
+    }
+    .section h2 {
+      color: #0275d8;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+    }
+    .gallery-item {
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      transition: transform 0.2s ease;
+      cursor: pointer;
+    }
+    .gallery-item:hover {
+      transform: scale(1.02);
+    }
+    .gallery-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .caption {
+      padding: 10px;
+      text-align: center;
+      font-size: 15px;
+    }
+    /* Lightbox */
+    .lightbox {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      display: none;
+    }
+    .lightbox img {
+      max-width: 90%;
+      max-height: 90%;
+      box-shadow: 0 0 15px white;
+    }
+  </style>
+</head>
+<body>
+  <div class="banner"></div>
+
+  <div class="center-text">
+    Chào mừng bạn đến với cửa hàng <strong>Tranh 3D Bể Cá Lộc Phát</strong> – chuyên cung cấp tranh dán đáy và tranh trang trí cao cấp cho bể cá cảnh. Cam kết chất lượng – hình ảnh sắc nét – giao hàng toàn quốc!
+  </div>
+
+  <header>
+    <h1>Tranh 3D Bể Cá - Lộc Phát</h1>
+    <p>Thế giới tranh trang trí sống động cho bể cá & không gian chill</p>
+  </header>
+
+  <!-- Lightbox for full view -->
+  <div class="lightbox" id="lightbox" onclick="this.style.display='none'">
+    <img id="lightbox-img" src="" alt="Preview">
+  </div>
+
+  <!-- BẮT ĐẦU CHỦ ĐỀ 1: Tranh Dán Đáy -->
+  <div class="section">
+    <h2>🎨 Chủ đề: Tranh Dán Đáy</h2>
+    <div class="gallery" id="gallery">
+      <!-- Các ảnh sẽ được chèn ở đây -->
+    </div>
+  </div>
+
+  <script>
+    const gallery = document.getElementById('gallery');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+
+    const images = [...Array(36).keys()].map(i => {
+      const num = i + 1;
+      return {
+        src: `https://i.postimg.cc/${num === 1 ? '0jq2j2Dz/Tranh-d-n-y-1.png' :
+             num === 2 ? 'PJzfwsQ2/Tranh-d-n-y-2.png' :
+             num === 3 ? '7YwZyhqc/Tranh-d-n-y-3.png' :
+             num === 4 ? 'c1QLjwGw/Tranh-d-n-y-4.png' :
+             num === 5 ? 'rFjFyTmp/Tranh-d-n-y-5.png' :
+             num === 6 ? '6pQ6yP2f/Tranh-d-n-y-6.png' :
+             num === 7 ? 'BnwSDC29/Tranh-d-n-y-7.png' :
+             num === 8 ? 'fbtwv0v3/Tranh-d-n-y-8.png' :
+             num === 9 ? 'FKMhCsPT/Tranh-d-n-y-9.png' :
+             num === 10 ? 'Px1Tgs9T/Tranh-d-n-y-10.png' :
+             num === 11 ? 'vTMbM2w9/Tranh-d-n-y-11.png' :
+             num === 12 ? 'Bbgsv5Jz/Tranh-d-n-y-12.png' :
+             num === 13 ? 'sf93Kz5J/Tranh-d-n-y-13.png' :
+             num === 14 ? '3J8YcqBQ/Tranh-d-n-y-14.png' :
+             num === 15 ? 'dt5wP9Hk/Tranh-d-n-y-15.png' :
+             num === 16 ? '9QzVWqKx/Tranh-d-n-y-16.png' :
+             num === 17 ? 'RZ8mqZzv/Tranh-d-n-y-17.png' :
+             num === 18 ? 'N0HcXvgm/Tranh-d-n-y-18.png' :
+             num === 19 ? '26NfF96J/Tranh-d-n-y-19.png' :
+             num === 20 ? 'j56Y86nj/Tranh-d-n-y-20.png' :
+             num === 21 ? 'QCXGvBcJ/Tranh-d-n-y-21.png' :
+             num === 22 ? 'fyBnswKn/Tranh-d-n-y-22.png' :
+             num === 23 ? 'Y23wY3wn/Tranh-d-n-y-23.png' :
+             num === 24 ? 'Dyw3gXv2/Tranh-d-n-y-24.png' :
+             num === 25 ? 'Bn89WfPk/Tranh-d-n-y-25.png' :
+             num === 26 ? 'kXY3hgGW/Tranh-d-n-y-26.png' :
+             num === 27 ? 'L8rd2QzX/Tranh-d-n-y-27.png' :
+             num === 28 ? 'PxjB8LVn/Tranh-d-n-y-28.png' :
+             num === 29 ? '6QRk3V0h/Tranh-d-n-y-29.png' :
+             num === 30 ? 'SsfHLyH2/Tranh-d-n-y-30.png' :
+             num === 31 ? '6q6gYkNH/Tranh-d-n-y-31.png' :
+             num === 32 ? '90xSSLmc/Tranh-d-n-y-32.png' :
+             num === 33 ? '9X1vrQGs/Tranh-d-n-y-33.png' :
+             num === 34 ? 'jd5BNYc2/Tranh-d-n-y-34.png' :
+             num === 35 ? 'SxY5TLwp/Tranh-d-n-y-35.png' :
+             'PrR9QVV4/Tranh-d-n-y-36.png'}`,
+        alt: `Tranh Dán Đáy ${num}`
+      };
+    });
+
+    images.forEach(({src, alt}) => {
+      const item = document.createElement('div');
+      item.className = 'gallery-item';
+      item.innerHTML = `<img src="${src}" alt="${alt}"><div class="caption">${alt}</div>`;
+      gallery.appendChild(item);
+    });
+
+    document.querySelectorAll('.gallery-item img').forEach(img => {
+      img.onclick = () => {
+        lightbox.style.display = 'flex';
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt;
+      };
+    });
+
+    lightbox.onclick = () => {
+      lightbox.style.display = 'none';
+    };
+  </script>
+</body>
+</html>
+
+    <!-- CHỦ ĐỀ 2: Cá -->
+  <div class="section">
+    <h2>🐠 Chủ đề: Cá</h2>
+    <div class="gallery" id="gallery-ca"></div>
+  </div>
+
+  <script>
+    const galleryCa = document.getElementById('gallery-ca');
+    const imagesCa = Array.from({ length: 23 }, (_, i) => {
+  const num = i + 1;
+  const path =
+    num === 1 ? '4xh8Xf4C/C-1.png' :
+    num === 2 ? 'TPMtwzhK/C-2.png' :
+    num === 3 ? 'zfC0RxR0/C-3.png' :
+    num === 4 ? 'qRpQc2s0/C-4.png' :
+    num === 5 ? 'XJxLsXL5/C-5.png' :
+    num === 6 ? 'FzRZ8mCB/C-6.png' :
+    num === 7 ? 'WzHnPKQb/C-7.png' :
+    num === 8 ? 'h4yMxzfW/C-8.png' :
+    num === 9 ? 'BQjpCSK8/C-9.png' :
+    num === 10 ? '9Fsp86dL/C-10.png' :
+    num === 11 ? '8zWbqZwN/C-11.png' :
+    num === 12 ? 'JhLQmjdJ/C-12.png' :
+    num === 13 ? 'Gpxxp9Zf/C-13.png' :
+    num === 14 ? 'gJcqLmp2/C-14.png' :
+    num === 15 ? 'tTrdhwRt/C-15.png' :
+    num === 16 ? '3NdX91dM/C-16.png' :
+    num === 17 ? 'NFS1nXHK/C-17.png' :
+    num === 18 ? 'T24q1z4T/C-18.png' :
+    num === 19 ? '15V0qvkw/C-19.png' :
+    num === 20 ? 'rw61CSTb/C-20.png' :
+    num === 21 ? 'YC11XhqS/C-21.png' :
+    num === 22 ? 'N0BRZB5k/C-22.png' :
+    'fbCYNpdn/C-23.png';
+
+  return `https://i.postimg.cc/${path}`;
+});
+
+    imagesCa.forEach((src, index) => {
+  const alt = `Tranh Cá ${index + 1}`;
+  const item = document.createElement('div');
+  item.className = 'gallery-item';
+  item.innerHTML = `<img src="${src}" alt="${alt}"><div class="caption">${alt}</div>`;
+  galleryCa.appendChild(item);
+});
+  </script>
+
+</body>
+</html>
+<!-- CHỦ ĐỀ 3: Cây - Hoa -->
+  <div class="section">
+    <h2>🌸 Chủ đề: Cây - Hoa</h2>
+    <div class="gallery" id="gallery-cayhoa"></div>
+  </div>
+
+  <script>
+    const galleryCayHoa = document.getElementById('gallery-cayhoa');
+    const imagesCayHoa = Array.from({ length: 42 }, (_, i) => {
+      const num = i + 1;
+      const path =
+        num === 1 ? 'TYcdCxv6/C-y-Hoa-1.png' :
+        num === 2 ? 'yYK6md5j/C-y-Hoa-2.png' :
+        num === 3 ? 'BZHQPDht/C-y-Hoa-3.png' :
+        num === 4 ? 'KjPGXSKt/C-y-Hoa-4.png' :
+        num === 5 ? '8zP1YYTr/C-y-Hoa-5.png' :
+        num === 6 ? 'zGtJYkf2/C-y-Hoa-6.png' :
+        num === 7 ? 'pdmPWnhW/C-y-Hoa-7.png' :
+        num === 8 ? 'tg8pYCWh/C-y-Hoa-8.png' :
+        num === 9 ? '63RwRJfF/C-y-Hoa-9.png' :
+        num === 10 ? 'yxHKyQfx/C-y-Hoa-10.png' :
+        num === 11 ? 'qqxTbsYL/C-y-Hoa-11.png' :
+        num === 12 ? 'MZ7qpwTQ/C-y-Hoa-12.png' :
+        num === 13 ? 'GhbrBf8S/C-y-Hoa-13.png' :
+        num === 14 ? 'm2V47S7Z/C-y-Hoa-14.png' :
+        num === 15 ? 'DwZT6bcr/C-y-Hoa-15.png' :
+        num === 16 ? 'mg5G52d0/C-y-Hoa-16.png' :
+        num === 17 ? 'wBRd88Z3/C-y-Hoa-17.png' :
+        num === 18 ? 'mDxWTpWj/C-y-Hoa-18.png' :
+        num === 19 ? 'NM1qF8gc/C-y-Hoa-19.png' :
+        num === 20 ? 'J0MwkynB/C-y-Hoa-20.png' :
+        num === 21 ? 'nrkyYHjS/C-y-Hoa-21.png' :
+        num === 22 ? 'h41Rq0y8/C-y-Hoa-22.png' :
+        num === 23 ? 'pXVbVn4w/C-y-Hoa-23.png' :
+        num === 24 ? '28Hp1SfV/C-y-Hoa-24.png' :
+        num === 25 ? 'Gm9WGncz/C-y-Hoa-25.png' :
+        num === 26 ? '6pSDhbqK/C-y-Hoa-26.png' :
+        num === 27 ? 'nLDNSK9D/C-y-Hoa-27.png' :
+        num === 28 ? 'QtZw2Bcn/C-y-Hoa-28.png' :
+        num === 29 ? 'hj86cSr4/C-y-Hoa-29.png' :
+        num === 30 ? 'GtcNpZ7F/C-y-Hoa-30.png' :
+        num === 31 ? 'D0BN4BHt/C-y-Hoa-31.png' :
+        num === 32 ? 'NG4SnjFp/C-y-Hoa-32.png' :
+        num === 33 ? '153211NP/C-y-Hoa-33.png' :
+        num === 34 ? 'TYNSRNrb/C-y-Hoa-34.png' :
+        num === 35 ? '52Hrj53R/C-y-Hoa-35.png' :
+        num === 36 ? '0yLBS6X2/C-y-Hoa-36.png' :
+        num === 37 ? 'pdz1J23Q/C-y-Hoa-37.png' :
+        num === 38 ? 'Kzbp96y6/C-y-Hoa-38.png' :
+        num === 39 ? 'gJKS1gzn/C-y-Hoa-39.png' :
+        num === 40 ? 'Gth7Rvtz/C-y-Hoa-40.png' :
+        num === 41 ? 'NFJNjLrt/C-y-Hoa-41.png' :
+        'c1Xkmkkz/C-y-Hoa-42.png';
+
+      return `https://i.postimg.cc/${path}`;
+    });
+
+    imagesCayHoa.forEach((src, index) => {
+      const alt = `Tranh Cây - Hoa ${index + 1}`;
+      const item = document.createElement('div');
+      item.className = 'gallery-item';
+      item.innerHTML = `<img src="${src}" alt="${alt}"><div class="caption">${alt}</div>`;
+      galleryCayHoa.appendChild(item);
+    });
+  </script>
+
+</body>
+</html>
+
+<!-- CHỦ ĐỀ 4: Hang Động -->
+  <div class="section">
+    <h2>🪨 Chủ đề: Hang Động</h2>
+    <div class="gallery" id="gallery-hangdong"></div>
+  </div>
+
+  <script>
+    const galleryHangDong = document.getElementById('gallery-hangdong');
+    const imagesHangDong = Array.from({ length: 10 }, (_, i) => {
+      const num = i + 1;
+      const path =
+        num === 1 ? 'MGCj0w1S/Hang-ng-1.png' :
+        num === 2 ? 'rm5RQH9t/Hang-ng-2.png' :
+        num === 3 ? '5tYCFyYg/Hang-ng-3.png' :
+        num === 4 ? 'BbsLyCh7/Hang-ng-4.png' :
+        num === 5 ? 'y6XSRwdM/Hang-ng-5.png' :
+        num === 6 ? 'gjDXP6Qz/Hang-ng-6.png' :
+        num === 7 ? 'SNSYfDYJ/Hang-ng-7.png' :
+        num === 8 ? 'c4Fg9wfT/Hang-ng-8.png' :
+        num === 9 ? 'W1tDQznV/Hang-ng-9.png' :
+        't4f1ybSx/Hang-ng-10.png';
+
+      return `https://i.postimg.cc/${path}`;
+    });
+
+    imagesHangDong.forEach((src, index) => {
+      const alt = `Tranh Hang Động ${index + 1}`;
+      const item = document.createElement('div');
+      item.className = 'gallery-item';
+      item.innerHTML = `<img src="${src}" alt="${alt}"><div class="caption">${alt}</div>`;
+      galleryHangDong.appendChild(item);
+    });
+  </script>
+
+<!-- CHỦ ĐỀ 5: Hoa Sen -->
+  <div class="section">
+    <h2>🌸 Chủ đề: Hoa Sen</h2>
+    <div class="gallery" id="gallery-hoasen"></div>
+  </div>
+
+  <script>
+    const galleryHoaSen = document.getElementById('gallery-hoasen');
+    const imagesHoaSen = Array.from({ length: 26 }, (_, i) => {
+      const num = i + 1;
+      const path =
+        num === 1 ? 'nL0vqg0V/Hoa-Sen-1.png' :
+        num === 2 ? 'G2tvKK5F/Hoa-Sen-2.png' :
+        num === 3 ? 'x8bMDCYq/Hoa-Sen-3.png' :
+        num === 4 ? 'XJPdz5RT/Hoa-Sen-4.png' :
+        num === 5 ? 'kD38nmXs/Hoa-Sen-5.png' :
+        num === 6 ? 'h4J5P1tQ/Hoa-Sen-6.png' :
+        num === 7 ? 'SQwtXYnT/Hoa-Sen-7.png' :
+        num === 8 ? 'kXKYWM8n/Hoa-Sen-8.png' :
+        num === 9 ? 'GmR7K0Jv/Hoa-Sen-9.png' :
+        num === 10 ? 'jSh8k8Zm/Hoa-Sen-10.png' :
+        num === 11 ? '8CPy8hY5/Hoa-Sen-11.png' :
+        num === 12 ? '25c0C1px/Hoa-Sen-12.png' :
+        num === 13 ? 'C1Rm5wSp/Hoa-Sen-13.png' :
+        num === 14 ? '1tbMNb3n/Hoa-Sen-14.png' :
+        num === 15 ? 'hvxs8MXC/Hoa-Sen-15.png' :
+        num === 16 ? 'fW08hW8x/Hoa-Sen-16.png' :
+        num === 17 ? 'm2f8ZxnK/Hoa-Sen-17.png' :
+        num === 18 ? '9Fd1r850/Hoa-Sen-18.png' :
+        num === 19 ? 'dVJ6d2wB/Hoa-Sen-19.png' :
+        num === 20 ? 'qvQLGN7d/Hoa-Sen-20.png' :
+        num === 21 ? 'tgTzv91n/Hoa-Sen-21.png' :
+        num === 22 ? 'mr5y0KMX/Hoa-Sen-22.png' :
+        num === 23 ? 'QtKJsSJX/Hoa-Sen-23.png' :
+        num === 24 ? 'gjvyLJ7Q/Hoa-Sen-24.png' :
+        num === 25 ? '1Xxcz6vD/Hoa-Sen-25.png' :
+        'FFcVBWKp/Hoa-Sen-26.png';
+
+      return `https://i.postimg.cc/${path}`;
+    });
+
+    imagesHoaSen.forEach((src, index) => {
+      const alt = `Tranh Hoa Sen ${index + 1}`;
+      const item = document.createElement('div');
+      item.className = 'gallery-item';
+      item.innerHTML = `<img src="${src}" alt="${alt}"><div class="caption">${alt}</div>`;
+      galleryHoaSen.appendChild(item);
+    });
+  </script>
+
+<!-- CHỦ ĐỀ 6: Núi -->
+  <div class="section">
+    <h2>⛰️ Chủ đề: Núi</h2>
+    <div class="gallery" id="gallery-nui"></div>
+  </div>
+
+  <script>
+    const galleryNui = document.getElementById('gallery-nui');
+    const imagesNui = Array.from({ length: 46 }, (_, i) => {
+      const num = i + 1;
+      const path =
+        num === 1 ? 'X7tG63Dy/N-i-1.png' :
+        num === 2 ? 'P5ZLtcBV/N-i-2.png' :
+        num === 3 ? 'wT1yr3Fp/N-i-3.png' :
+        num === 4 ? 'mrsPhj4L/N-i-4.png' :
+        num === 5 ? 'bv9snnYQ/N-i-5.png' :
+        num === 6 ? 'B6ZtBvtR/N-i-6.png' :
+        num === 7 ? 'wvWMfdmM/N-i-7.png' :
+        num === 8 ? 'L5nXG0tT/N-i-8.png' :
+        num === 9 ? 'tJwTbtDH/N-i-9.png' :
+        num === 10 ? 'xj4qLnQF/N-i-10.png' :
+        num === 11 ? 'Hs8n2RsW/N-i-11.png' :
+        num === 12 ? 'Vky6Hgdq/N-i-12.png' :
+        num === 13 ? 'JzbnwXk9/N-i-13.png' :
+        num === 14 ? 'k5q575ND/N-i-14.png' :
+        num === 15 ? 'g0s2jP4s/N-i-15.png' :
+        num === 16 ? 'gJ0k6BTW/N-i-16.png' :
+        num === 17 ? 'mD6Z3NvF/N-i-17.png' :
+        num === 18 ? '6q2WM4Kb/N-i-18.png' :
+        num === 19 ? 'XqRVmN7j/N-i-19.png' :
+        num === 20 ? 'Y2ZqhRN5/N-i-20.png' :
+        num === 21 ? 'KvTcLTJR/N-i-21.png' :
+        num === 22 ? 't4HqzgMD/N-i-22.png' :
+        num === 23 ? '0yd8Xsgv/N-i-23.png' :
+        num === 24 ? '6QWBDmwv/N-i-24.png' :
+        num === 25 ? 'SKgmqfNt/N-i-25.png' :
+        num === 26 ? 'ZR04qvWY/N-i-26.png' :
+        num === 27 ? 'KzVF3cTP/N-i-27.png' :
+        num === 28 ? '0jwvYgGL/N-i-28.png' :
+        num === 29 ? '3WQT9LnW/N-i-29.png' :
+        num === 30 ? '44D7rs0H/N-i-30.png' :
+        num === 31 ? '65C2KFsj/N-i-31.png' :
+        num === 32 ? 'vZM1ZXbQ/N-i-32.png' :
+        num === 33 ? 'DwgSJsw1/N-i-33.png' :
+        num === 34 ? 'KY8Rnz1w/N-i-34.png' :
+        num === 35 ? 'k5YDwm84/N-i-35.png' :
+        num === 36 ? 'QtBCyykq/N-i-36.png' :
+        num === 37 ? 'vBpTFt0w/N-i-37.png' :
+        num === 38 ? 'VsC592Nf/N-i-38.png' :
+        num === 39 ? 'RhKFMJY6/N-i-39.png' :
+        num === 40 ? 'RVxhgG3c/N-i-40.png' :
+        num === 41 ? 'yYhdt992/N-i-41.png' :
+        num === 42 ? 'XYVJbJkq/N-i-42.png' :
+        num === 43 ? 'YCbSqHd3/N-i-43.png' :
+        num === 44 ? 'Ls58Jb7M/N-i-44.png' :
+        num === 45 ? 'HLNsXtD8/N-i-45.png' :
+        'JnB7qBM6/N-i-46.png';
+
+      return `https://i.postimg.cc/${path}`;
+    });
+
+    imagesNui.forEach((src, index) => {
+      const alt = `Tranh Núi ${index + 1}`;
+      const item = document.createElement('div');
+      item.className = 'gallery-item';
+      item.innerHTML = `<img src="${src}" alt="${alt}"><div class="caption">${alt}</div>`;
+      galleryNui.appendChild(item);
+    });
+  </script>
+
+</body>
+</html>
+<!-- CHỦ ĐỀ 7: Phật -->
+<div class="section">
+  <h2>🧘 Chủ đề: Phật</h2>
+  <div class="gallery" id="gallery-phat"></div>
+</div>
+
+<script>
+  const galleryPhat = document.getElementById('gallery-phat');
+  const imagesPhat = Array.from({ length: 28 }, (_, i) => {
+    const num = i + 1;
+    const path =
+      num === 1 ? '3J27WTxG/Ph-t-1.png' :
+      num === 2 ? 'zDs8JB85/Ph-t-2.png' :
+      num === 3 ? '13PSqj8j/Ph-t-3.png' :
+      num === 4 ? '4x5gbQtN/Ph-t-4.png' :
+      num === 5 ? 'bvVf4Y37/Ph-t-5.png' :
+      num === 6 ? 'nLhtd9YK/Ph-t-6.png' :
+      num === 7 ? '0QLR2WgZ/Ph-t-7.png' :
+      num === 8 ? 'nzsfx8WC/Ph-t-8.png' :
+      num === 9 ? '2yhpqQrY/Ph-t-9.png' :
+      num === 10 ? 'Wpkcfvry/Ph-t-10.png' :
+      num === 11 ? 'KvhS6HD8/Ph-t-11.png' :
+      num === 12 ? 'wT58gQwc/Ph-t-12.png' :
+      num === 13 ? 'kgnr4RZr/Ph-t-13.png' :
+      num === 14 ? 'YC85mqKv/Ph-t-14.png' :
+      num === 15 ? 'Gp2ZPwdq/Ph-t-15.png' :
+      num === 16 ? 'VNV2DGN1/Ph-t-16.png' :
+      num === 17 ? 'Tw5FSVyb/Ph-t-17.png' :
+      num === 18 ? 'Fzt8QYcB/Ph-t-18.png' :
+      num === 19 ? 'x8K7j93T/Ph-t-19.png' :
+      num === 20 ? 'xjHB3PVD/Ph-t-20.png' :
+      num === 21 ? 'SNh3TzmX/Ph-t-21.png' :
+      num === 22 ? 'pXJ7gXds/Ph-t-22.png' :
+      num === 23 ? 'x1j7YDJn/Ph-t-23.png' :
+      num === 24 ? '4x80xLVt/Ph-t-24.png' :
+      num === 25 ? 'MGvFM7mL/Ph-t-25.png' :
+      num === 26 ? '25MX41HS/Ph-t-26.png' :
+      num === 27 ? 'TwbNQTSq/Ph-t-27.png' :
+      'rsLnPv26/Ph-t-28.png';
+
+    return `https://i.postimg.cc/${path}`;
+  });
+
+  imagesPhat.forEach((src, index) => {
+    const alt = `Tranh Phật ${index + 1}`;
+    const item = document.createElement('div');
+    item.className = 'gallery-item';
+    item.innerHTML = `<img src="${src}" alt="${alt}"><div class="caption">${alt}</div>`;
+    galleryPhat.appendChild(item);
+  });
+</script>
+
+
+
+
+
+
+
+</body>
+</html>
+
+<!-- CHỦ ĐỀ 8: Phong Cảnh -->
+<div class="section">
+  <h2>🏞️ Chủ đề: Phong Cảnh</h2>
+  <div class="gallery" id="gallery-phongcanh"></div>
+</div>
+
+<script>
+  const galleryPhongCanh = document.getElementById('gallery-phongcanh');
+  const imagesPhongCanh = Array.from({ length: 12 }, (_, i) => {
+    const num = i + 1;
+    const path =
+      num === 1 ? 'HnqyzCq5/Phong-C-nh-1.png' :
+      num === 2 ? 'wvbJtNFw/Phong-C-nh-2.png' :
+      num === 3 ? '5yYz8tRb/Phong-C-nh-3.png' :
+      num === 4 ? 'RCyK4cWF/Phong-C-nh-4.png' :
+      num === 5 ? 'BQFD6XFC/Phong-C-nh-5.png' :
+      num === 6 ? '2SfWBrFN/Phong-C-nh-6.png' :
+      num === 7 ? 'Hk4ywRBc/Phong-C-nh-7.png' :
+      num === 8 ? 'hGD7ps5C/Phong-C-nh-8.png' :
+      num === 9 ? 'Dzx4DsV7/Phong-C-nh-9.png' :
+      num === 10 ? 'RFqJzF9K/Phong-C-nh-10.png' :
+      num === 11 ? '9MSRXhFS/Phong-C-nh-11.png' :
+      'zvgLVcyf/Phong-C-nh-12.png';
+
+    return `https://i.postimg.cc/${path}`;
+  });
+
+  imagesPhongCanh.forEach((src, index) => {
+    const alt = `Tranh Phong Cảnh ${index + 1}`;
+    const item = document.createElement('div');
+    item.className = 'gallery-item';
+    item.innerHTML = `<img src="${src}" alt="${alt}"><div class="caption">${alt}</div>`;
+    galleryPhongCanh.appendChild(item);
+  });
+</script>
+<!-- CHỦ ĐỀ 9: Rồng -->
+<div class="section">
+  <h2>🐉 Chủ đề: Rồng</h2>
+  <div class="gallery" id="gallery-rong"></div>
+</div>
+
+<script>
+  const galleryRong = document.getElementById('gallery-rong');
+  const imagesRong = Array.from({ length: 40 }, (_, i) => {
+    const num = i + 1;
+    const path =
+      num === 1 ? 'Z5qf282q/R-ng-1.png' :
+      num === 2 ? '3rgbvJ23/R-ng-2.png' :
+      num === 3 ? 'Wb8W5W9K/R-ng-3.png' :
+      num === 4 ? '65tbLJhn/R-ng-4.png' :
+      num === 5 ? 'g2BMWwbH/R-ng-5.png' :
+      num === 6 ? 'JhDp411V/R-ng-6.png' :
+      num === 7 ? '6QkY8D37/R-ng-7.png' :
+      num === 8 ? 'B62NHMLm/R-ng-8.png' :
+      num === 9 ? 'Rh9dRKw4/R-ng-9.png' :
+      num === 10 ? 'J0qqd0QJ/R-ng-10.png' :
+      num === 11 ? 'YCj3bpLG/R-ng-11.png' :
+      num === 12 ? 'BQmpT8bf/R-ng-12.png' :
+      num === 13 ? 'wxc0B4dv/R-ng-13.png' :
+      num === 14 ? 'Nfsb28gx/R-ng-14.png' :
+      num === 15 ? '52GmrZ8P/R-ng-15.png' :
+      num === 16 ? '9f7BHJpc/R-ng-16.png' :
+      num === 17 ? 'bJ0HsrWM/R-ng-17.png' :
+      num === 18 ? 'RFxLSKsK/R-ng-18.png' :
+      num === 19 ? 'Bbq5DsGv/R-ng-19.png' :
+      num === 20 ? 'rsQ1Nb8N/R-ng-20.png' :
+      num === 21 ? 'WpnwVDMq/R-ng-21.png' :
+      num === 22 ? 'VLkBkYRG/R-ng-22.png' :
+      num === 23 ? 'PrVbLBVt/R-ng-23.png' :
+      num === 24 ? '52HB8nD8/R-ng-24.png' :
+      num === 25 ? 'dVz86GKp/R-ng-25.png' :
+      num === 26 ? 'W4g0HtN3/R-ng-26.png' :
+      num === 27 ? '85GLQDcb/R-ng-27.png' :
+      num === 28 ? 'qRGypYCH/R-ng-28.png' :
+      num === 29 ? 'wMTJMVhy/R-ng-29.png' :
+      num === 30 ? 'prGjFFZ0/R-ng-30.png' :
+      num === 31 ? 'MZdV4CSy/R-ng-31.png' :
+      num === 32 ? '4NyVTWfj/R-ng-32.png' :
+      num === 33 ? 'ncW7VqMr/R-ng-33.png' :
+      num === 34 ? '4xhcYnh5/R-ng-34.png' :
+      num === 35 ? '9f57ZVdj/R-ng-35.png' :
+      num === 36 ? 'BvT1CypP/R-ng-36.png' :
+      num === 37 ? 'ZRJvscs7/R-ng-37.png' :
+      num === 38 ? 'rmg0Brv8/R-ng-38.png' :
+      num === 39 ? '8c5JNCSL/R-ng-39.png' :
+      'tJM1THqw/R-ng-40.png';
+
+    return `https://i.postimg.cc/${path}`;
+  });
+
+  imagesRong.forEach((src, index) => {
+    const alt = `Tranh Rồng ${index + 1}`;
+    const item = document.createElement('div');
+    item.className = 'gallery-item';
+    item.innerHTML = `<img src="${src}" alt="${alt}"><div class="caption">${alt}</div>`;
+    galleryRong.appendChild(item);
+  });
+</script>
+
+<!-- CHỦ ĐỀ 10: San Hô - Biển -->
+<div class="section">
+  <h2>💦 Chủ đề: San Hô - Biển</h2>
+  <div class="gallery" id="gallery-sanhobien"></div>
+</div>
+
+<script>
+  const gallerySanhobien = document.getElementById('gallery-sanhobien');
+  const imagesSanhobien = Array.from({ length: 14 }, (_, i) => {
+    const num = i + 1;
+    const path =
+      num === 1 ? 'fTfjwVm0/San-h-bi-n-1.png' :
+      num === 2 ? '28D7RQbD/San-h-bi-n-2.png' :
+      num === 3 ? 'bwY0dq9V/San-h-bi-n-3.png' :
+      num === 4 ? '52PBCDP4/San-h-bi-n-4.png' :
+      num === 5 ? '7LfgMXcg/San-h-bi-n-5.png' :
+      num === 6 ? '9fKyxZ5s/San-h-bi-n-6.png' :
+      num === 7 ? 'zBhK4vqv/San-h-bi-n-7.png' :
+      num === 8 ? 'KjyBbbYN/San-h-bi-n-8.png' :
+      num === 9 ? 'cCMY4zgN/San-h-bi-n-9.png' :
+      num === 10 ? 'nVvqkXdw/San-h-bi-n-10.png' :
+      num === 11 ? 'NfBmPQSG/San-h-bi-n-11.png' :
+      num === 12 ? 'pXC8wgMf/San-h-bi-n-12.png' :
+      num === 13 ? 'JzhJMPR9/San-h-bi-n-13.png' :
+      'sg0WX7X1/San-h-bi-n-14.png';
+
+    return `https://i.postimg.cc/${path}`;
+  });
+
+  imagesSanhobien.forEach((src, index) => {
+    const alt = `Tranh San Hô - Biển ${index + 1}`;
+    const item = document.createElement('div');
+    item.className = 'gallery-item';
+    item.innerHTML = `<img src="${src}" alt="${alt}"><div class="caption">${alt}</div>`;
+    gallerySanhobien.appendChild(item);
+  });
+</script>
+
+
+<!-- CHỦ ĐỀ 11: Thác - Suối -->
+<div class="section">
+  <h2>💦 Chủ đề: Thác - Suối</h2>
+  <div class="gallery" id="gallery-thacsuoi"></div>
+</div>
+
+<script>
+  const galleryThacSuoi = document.getElementById('gallery-thacsuoi');
+  const imagesThacSuoi = Array.from({ length: 17 }, (_, i) => {
+    const num = i + 1;
+    const path =
+      num === 1 ? 'qqkqQvR9/Th-c-su-i-1.png' :
+      num === 2 ? 'xdzX1ZhF/Th-c-su-i-2.png' :
+      num === 3 ? 'qRcg83ks/Th-c-su-i-3.png' :
+      num === 4 ? '85gjJHVk/Th-c-su-i-4.png' :
+      num === 5 ? 'C5m12pnd/Th-c-su-i-5.png' :
+      num === 6 ? 'xjRc8MpY/Th-c-su-i-6.png' :
+      num === 7 ? 'NfjLHFZX/Th-c-su-i-7.png' :
+      num === 8 ? 'FsCzgmQB/Th-c-su-i-8.png' :
+      num === 9 ? '13gtvTm5/Th-c-su-i-9.png' :
+      num === 10 ? 'jSGjmX26/Th-c-su-i-10.png' :
+      num === 11 ? 'ZqpqSdvG/Th-c-su-i-11.png' :
+      num === 12 ? 'xCQ1T1Kc/Th-c-su-i-12.png' :
+      num === 13 ? 'ZRLK9zcj/Th-c-su-i-13.png' :
+      num === 14 ? 'wMTxL44z/Th-c-su-i-14.png' :
+      num === 15 ? '0jWkfGhw/Th-c-su-i-15.png' :
+      num === 16 ? 'pVqLRxyL/Th-c-su-i-16.png' :
+      'kXGX5ZtF/Th-c-su-i-17.png';
+
+    return `https://i.postimg.cc/${path}`;
+  });
+
+  imagesThacSuoi.forEach((src, index) => {
+    const alt = `Tranh Thác - Suối ${index + 1}`;
+    const item = document.createElement('div');
+    item.className = 'gallery-item';
+    item.innerHTML = `<img src="${src}" alt="${alt}"><div class="caption">${alt}</div>`;
+    galleryThacSuoi.appendChild(item);
+  });
+</script>
+
+<!-- CHỦ ĐỀ 12: Thủy Mặc -->
+<div class="section">
+  <h2>🖌️ Chủ đề: Thủy Mặc</h2>
+  <div class="gallery" id="gallery-thuymac"></div>
+</div>
+
+<script>
+  const galleryThuyMac = document.getElementById('gallery-thuymac');
+  const imagesThuyMac = Array.from({ length: 35 }, (_, i) => {
+    const num = i + 1;
+    const path =
+      num === 1 ? '25DDnX3t/Tranh-Th-y-M-c-1.png' :
+      num === 2 ? 'W4wP86k1/Tranh-Th-y-M-c-2.png' :
+      num === 3 ? 'NMNvqsbh/Tranh-Th-y-M-c-3.png' :
+      num === 4 ? '9MXHnRdt/Tranh-Th-y-M-c-4.png' :
+      num === 5 ? 'GtHwbWS4/Tranh-Th-y-M-c-5.png' :
+      num === 6 ? 'KjwXj0dJ/Tranh-Th-y-M-c-6.png' :
+      num === 7 ? 'BZVfmvXH/Tranh-Th-y-M-c-7.png' :
+      num === 8 ? 'Hs8DRCyK/Tranh-Th-y-M-c-8.png' :
+      num === 9 ? '9Q35jNPf/Tranh-Th-y-M-c-9.png' :
+      num === 10 ? 'FHjtFgGV/Tranh-Th-y-M-c-10.png' :
+      num === 11 ? 'YSk5vGsK/Tranh-Th-y-M-c-11.png' :
+      num === 12 ? 'mrw0CLvc/Tranh-Th-y-M-c-12.png' :
+      num === 13 ? 'HxkF2Gm6/Tranh-Th-y-M-c-13.png' :
+      num === 14 ? 'XJ1m1274/Tranh-Th-y-M-c-14.png' :
+      num === 15 ? 'mkcqvQtM/Tranh-Th-y-M-c-15.png' :
+      num === 16 ? 'KjdVxRMW/Tranh-Th-y-M-c-16.png' :
+      num === 17 ? 'Y2VT1ysx/Tranh-Th-y-M-c-17.png' :
+      num === 18 ? 'm2HJVyxW/Tranh-Th-y-M-c-18.png' :
+      num === 19 ? 'VkPTh01r/Tranh-Th-y-M-c-19.png' :
+      num === 20 ? 'Jz3gC74T/Tranh-Th-y-M-c-20.png' :
+      num === 21 ? 'cJszxqvd/Tranh-Th-y-M-c-21.png' :
+      num === 22 ? '0NcBrtSD/Tranh-Th-y-M-c-22.png' :
+      num === 23 ? 'NMFPX18V/Tranh-Th-y-M-c-23.png' :
+      num === 24 ? 'C12rszmK/Tranh-Th-y-M-c-24.png' :
+      num === 25 ? 'PJ833TRQ/Tranh-Th-y-M-c-25.png' :
+      'pyb033Nb/Tranh-Th-y-M-c-26.png';
+
+    return `https://i.postimg.cc/${path}`;
+  });
+
+  imagesThuyMac.forEach((src, index) => {
+    const alt = `Tranh Thủy Mặc ${index + 1}`;
+    const item = document.createElement('div');
+    item.className = 'gallery-item';
+    item.innerHTML = `<img src="${src}" alt="${alt}"><div class="caption">${alt}</div>`;
+    galleryThuyMac.appendChild(item);
+  });
+</script>
+<!-- CHỦ ĐỀ 13: Thủy Sinh -->
+<div class="section">
+  <h2>🐟 Chủ đề: Thủy Sinh</h2>
+  <div class="gallery" id="gallery-thuysinh"></div>
+</div>
+
+<script>
+  const galleryThuySinh = document.getElementById('gallery-thuysinh');
+  const imagesThuySinh = Array.from({ length: 9 }, (_, i) => {
+    const num = i + 1;
+    const path =
+      num === 1 ? 'YScPJGHL/Th-y-Sinh-1.png' :
+      num === 2 ? 'yNFGB11Q/Th-y-Sinh-2.png' :
+      num === 3 ? '9MbNRLqy/Th-y-Sinh-3.png' :
+      num === 4 ? 'MTqFpCXW/Th-y-Sinh-4.png' :
+      num === 5 ? 'MHG3y1yN/Th-y-Sinh-5.png' :
+      num === 6 ? 'C56PJd71/Th-y-Sinh-6.png' :
+      num === 7 ? 'sfnN30zr/Th-y-Sinh-7.png' :
+      num === 8 ? 'jdLk2QqJ/Th-y-Sinh-8.png' :
+      '8P9X6JsX/Th-y-Sinh-9.png';
+
+    return `https://i.postimg.cc/${path}`;
+  });
+
+  imagesThuySinh.forEach((src, index) => {
+    const alt = `Tranh Thủy Sinh ${index + 1}`;
+    const item = document.createElement('div');
+    item.className = 'gallery-item';
+    item.innerHTML = `<img src="${src}" alt="${alt}"><div class="caption">${alt}</div>`;
+    galleryThuySinh.appendChild(item);
+  });
+</script>
+<!-- CHỦ ĐỀ 14: Trăng Sao - Vũ Trụ -->
+<div class="section">
+  <h2>🌌 Chủ đề: Trăng Sao - Vũ Trụ</h2>
+  <div class="gallery" id="gallery-vutru"></div>
+</div>
+
+<script>
+  const galleryVuTru = document.getElementById('gallery-vutru');
+  const imagesVuTru = Array.from({ length: 12 }, (_, i) => {
+    const num = i + 1;
+    const path =
+      num === 1 ? 'jd1qnXHV/Tranh-sao-V-tr-1.png' :
+      num === 2 ? 'L8Z9t1DJ/Tranh-sao-V-tr-2.png' :
+      num === 3 ? 'pdb2qLcq/Tranh-sao-V-tr-3.png' :
+      num === 4 ? 'rp1qb2vc/Tranh-sao-V-tr-4.png' :
+      num === 5 ? 'zBqqYPrh/Tranh-sao-V-tr-5.png' :
+      num === 6 ? 'DZ5nvdvM/Tranh-sao-V-tr-6.png' :
+      num === 7 ? 'mkDRtzh2/Tranh-sao-V-tr-7.png' :
+      num === 8 ? 'rsPTWVtG/Tranh-sao-V-tr-8.png' :
+      num === 9 ? 'sf6sbc0B/Tranh-sao-V-tr-9.png' :
+      num === 10 ? 'pXmRvFgs/Tranh-sao-V-tr-10-Tr-i-sao-s-ng.png' :
+      num === 11 ? 'Pr0h5qHT/Tranh-sao-V-tr-11.png' :
+      'BnD3LGZD/Tranh-sao-V-tr-12-Tr-i-sao-m.png';
+
+    return `https://i.postimg.cc/${path}`;
+  });
+
+  imagesVuTru.forEach((src, index) => {
+    const alt = `Tranh Trăng Sao ${index + 1}`;
+    const item = document.createElement('div');
+    item.className = 'gallery-item';
+    item.innerHTML = `<img src="${src}" alt="${alt}"><div class="caption">${alt}</div>`;
+    galleryVuTru.appendChild(item);
+  });
+</script>
+<!-- CHỦ ĐỀ 15: Vân - Đá -->
+<div class="section">
+  <h2>🪨 Chủ đề: Vân - Đá</h2>
+  <div class="gallery" id="gallery-vanda"></div>
+</div>
+
+<script>
+  const galleryVanDa = document.getElementById('gallery-vanda');
+  const imagesVanDa = Array.from({ length: 20 }, (_, i) => {
+    const num = i + 1;
+    const path =
+      num === 1 ? 'HLCS6qwQ/V-n-1.png' :
+      num === 2 ? 'BvcmkmpR/V-n-2.png' :
+      num === 3 ? 'bwnCHyty/V-n-3.png' :
+      num === 4 ? 'Y9rdHQy0/V-n-4.png' :
+      num === 5 ? 'TwtCYhZ9/V-n-5.png' :
+      num === 6 ? 'Kj4QKxby/V-n-6.png' :
+      num === 7 ? 'QCPm1wNK/V-n-7.png' :
+      num === 8 ? 'T2HCzLj2/V-n-8.png' :
+      num === 9 ? 'BQLM4SNT/V-n-9.png' :
+      num === 10 ? 'yYMnNMrw/V-n-10.png' :
+      num === 11 ? 'pLKC5swy/V-n-11.png' :
+      num === 12 ? 'GprQFkRK/V-n-12.png' :
+      num === 13 ? 'vmzv3cHs/V-n-13.png' :
+      num === 14 ? 'hjt1wcf7/V-n-14.png' :
+      num === 15 ? 'zvLSz7wz/V-n-15.png' :
+      num === 16 ? 'NFW85Xb1/V-n-16.png' :
+      num === 17 ? 'fWFf24ZJ/V-n-17.png' :
+      num === 18 ? 'BQKcRhQN/V-n-18.png' :
+      num === 19 ? 'P5nzHmCH/V-n-19.png' :
+      'RZ11ZNtH/V-n-20.png';
+
+    return `https://i.postimg.cc/${path}`;
+  });
+
+  imagesVanDa.forEach((src, index) => {
+    const alt = `Tranh Vân - Đá ${index + 1}`;
+    const item = document.createElement('div');
+    item.className = 'gallery-item';
+    item.innerHTML = `<img src="${src}" alt="${alt}"><div class="caption">${alt}</div>`;
+    galleryVanDa.appendChild(item);
+  });
+</script>
+
+<!-- Nút điều hướng chủ đề -->
+<style>
+  .nav-button {
+    position: fixed;
+    right: 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 9999;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    transition: background-color 0.2s;
+  }
+
+  .nav-button:hover {
+    background-color: #0056b3;
+  }
+
+  #scrollUp {
+    bottom: 90px;
+  }
+
+  #scrollDown {
+    bottom: 20px;
+  }
+</style>
+
+<button class="nav-button" id="scrollUp">↑</button>
+<button class="nav-button" id="scrollDown">↓</button>
+
+<script>
+  const sections = document.querySelectorAll('.section');
+  let currentIndex = 0;
+
+  function scrollToSection(index) {
+    if (index >= 0 && index < sections.length) {
+      currentIndex = index;
+      sections[index].scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  document.getElementById('scrollUp').addEventListener('click', () => {
+    scrollToSection(currentIndex - 1);
+  });
+
+  document.getElementById('scrollDown').addEventListener('click', () => {
+    scrollToSection(currentIndex + 1);
+  });
+</script>
+
+<!-- Chú thích cố định -->
+<div style="
+  position: fixed;
+  bottom: 160px;
+  right: 20px;
+  background-color: rgba(0,0,0,0.7);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  z-index: 998;
+">
+  Bấm để chuyển<br>chủ đề Tranh
+</div>
+<!-- Nút liên hệ Zalo + Số điện thoại -->
+<a href="https://zalo.me/0963837959" target="_blank" style="
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 999;
+  background-color: #0084FF;
+  color: white;
+  padding: 10px 14px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-size: 15px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+">
+  <img src="https://i.postimg.cc/c1wRs0zY/zalo.jpg" alt="Zalo" width="20" height="20">
+  0963837959
+</a>
